@@ -1,0 +1,27 @@
+package com.iticbcn.webapp.mywebapp.Repositories;
+
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Repository;
+
+import com.iticbcn.webapp.mywebapp.Model.Llibre;
+
+@Repository
+public class RepoLlibre {
+
+    ArrayList<Llibre> llibres = new ArrayList<Llibre>();
+
+    public RepoLlibre() {
+        llibres.add(new Llibre(1,"HARRY POTTER I EL PRESONER D'AZKABAN","JK Rowling","Salamandra","26/9/2006","fantastica"));
+        llibres.add(new Llibre(1,"CODI DA VINCI","Dan Brown","Ariel","26/9/2006","ficcio"));
+    }
+
+    public ArrayList<Llibre> getAllLlibres() {
+        return llibres;
+    }
+
+    public void InsertaLlibre(Llibre llibre) {
+        llibres.add(llibre);
+    }
+    
+}
