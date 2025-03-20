@@ -14,12 +14,11 @@
             </form>
             <br></br>
 
-            <div th:if="${llibre == null}">
-                <!-- <p th:text="No hi ha cap llibre amb aquesta id"></p> -->
-                <td colspan="2">No hi ha cap llibre amb aquesta id</td>
+            <div th:if="${llibreErr}">
+                <p th:text="${message}"></td>
             </div>
             
-            <table th:unless="${llibre == null}" border=1>
+            <table th:if="${!llibreErr}" border=1>
                 <thead>
                     <tr>
                         <th>IdLlibre</th>
@@ -31,17 +30,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:if="${llibre == null}" >
-                        <td colspan="2">No hi ha cap llibre amb aquesta id</td>
-                    </tr>
-                    <tr th:if="${llibre !=null}">
-                        <td><span th:text="${llibre.idLlibre}"></span></td>
-                        <td><span th:text="${llibre.titol}"></span></td>
-                        <td><span th:text="${llibre.autor}"></span></td>
-                        <td><span th:text="${llibre.editorial}"></span></td>
-                        <td><span th:text="${llibre.datapublicacio}"></span></td>
-                        <td><span th:text="${llibre.tematica}"></span></td>
-                    </tr>
+                    <td><span th:text="${llibre.idLlibre}"></span></td>
+                    <td><span th:text="${llibre.titol}"></span></td>
+                    <td><span th:text="${llibre.autor}"></span></td>
+                    <td><span th:text="${llibre.editorial}"></span></td>
+                    <td><span th:text="${llibre.datapublicacio}"></span></td>
+                    <td><span th:text="${llibre.tematica}"></span></td>
                 </tbody>
             </table>
             <p><a href="/index">Tornar enrere</a></p>        

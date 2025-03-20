@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -85,6 +84,8 @@ public class BookController {
 
         Llibre llibre = new Llibre();
         llibre.setIdLlibre(0);
+        model.addAttribute("llibreErr", true);
+        model.addAttribute("message", "");
         model.addAttribute("llibre", llibre);
 
         return "cercaid";
@@ -97,17 +98,29 @@ public class BookController {
                           Model model) {
         
         int idLlib = 0;
+        String message = "";
+        boolean llibreErr = false;
 
         try {
             idLlib = Integer.parseInt(idLlibre);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        Llibre llibre = repoll.getLlibreID(idLlib);
+            Llibre llibre = repoll.getLlibreID(idLlib);
+            if(llibre !=null) {
+                model.addAttribute("llibre", llibre);
+            } else {
+                message = "No hi ha cap llibre amb aquesta id";
+                llibreErr = true;
+            }
 
-        model.addAttribute("llibre", llibre);
+        } catch (Exception e) {
+            message = "La id de llibre ha de ser un nombre enter";
+            llibreErr = true;
+        } 
+        
+        model.addAttribute("message", message);
+        model.addAttribute("llibreErr",llibreErr);
 
         return "cercaid";
+
     }
 
     @PostMapping("/logout")
