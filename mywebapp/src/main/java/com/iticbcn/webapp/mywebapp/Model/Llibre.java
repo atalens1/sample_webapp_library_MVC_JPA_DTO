@@ -7,6 +7,8 @@ public class Llibre {
     private String editorial;
     private String datapublicacio;
     private String tematica;
+
+    public Llibre() {}
     
     public Llibre(int idLlibre, String titol, String autor, String editorial, String datapublicacio, String tematica) {
         this.idLlibre = idLlibre;

@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -76,6 +78,36 @@ public class BookController {
         
         return "consulta";
     
+    }
+
+    @GetMapping("/cercaid")
+    public String inputCerca(@ModelAttribute("users") Usuaris users, Model model) {
+
+        Llibre llibre = new Llibre();
+        llibre.setIdLlibre(0);
+        model.addAttribute("llibre", llibre);
+
+        return "cercaid";
+
+    }
+
+    @PostMapping("/cercaid")
+    public String cercaId(@ModelAttribute("users") Usuaris users,
+                          @RequestParam(name = "idLlibre", required = false) String idLlibre, 
+                          Model model) {
+        
+        int idLlib = 0;
+
+        try {
+            idLlib = Integer.parseInt(idLlibre);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        Llibre llibre = repoll.getLlibreID(idLlib);
+
+        model.addAttribute("llibre", llibre);
+
+        return "cercaid";
     }
 
     @PostMapping("/logout")

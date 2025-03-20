@@ -23,5 +23,19 @@ public class RepoLlibre {
     public void InsertaLlibre(Llibre llibre) {
         llibres.add(llibre);
     }
+
+    public Llibre getLlibreID(int id) {
+        Llibre llibre = null;
+
+        //Opció clàssica, imperativa
+        for (Llibre l1:llibres) {
+            if (l1.getIdLlibre() == id) {
+                llibre = l1;
+            }
+        }
+
+
+        return llibre;
+    }
     
 }
