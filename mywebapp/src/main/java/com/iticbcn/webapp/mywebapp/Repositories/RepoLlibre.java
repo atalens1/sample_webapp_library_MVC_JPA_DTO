@@ -13,7 +13,7 @@ public class RepoLlibre {
 
     public RepoLlibre() {
         llibres.add(new Llibre(1,"HARRY POTTER I EL PRESONER D'AZKABAN","JK Rowling","Salamandra","26/9/2006","fantastica"));
-        llibres.add(new Llibre(1,"CODI DA VINCI","Dan Brown","Ariel","26/9/2006","ficcio"));
+        llibres.add(new Llibre(2,"CODI DA VINCI","Dan Brown","Ariel","26/9/2006","ficcio"));
     }
 
     public ArrayList<Llibre> getAllLlibres() {

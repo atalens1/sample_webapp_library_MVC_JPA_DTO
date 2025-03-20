@@ -24,5 +24,7 @@ public class Usuaris {
     public Usuaris(String usuari, String password) {
         this.usuari = usuari;
         this.password = password;
-    }    
+    }
+    
+    public Usuaris() {}
 }
