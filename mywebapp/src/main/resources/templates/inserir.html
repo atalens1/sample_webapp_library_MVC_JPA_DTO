@@ -9,7 +9,7 @@
     <center>
         <H1>Inserció de nou llibre</H1>
             <form action="/inserir" method="post">
-                Id del Llibre: <input type="number" step="1" name="idLlibre"><br><br>
+                Id del Llibre: <input type="number" name="idLlibre"><br><br>
                 Titol: <input type="text" name="titol"><br><br>
                 Autor: <input type="text" name="autor"><br><br>
                 Editorial: <input type="text" name="editorial"><br><br>
@@ -17,6 +17,10 @@
                 Tematica: <input type="text" name="tematica"><br><br>
                 <input type=submit name="submit" value="Desar">
             </form>
+
+            <div th:if="${llibreErr}">
+                <p th:text="${message}"></td>
+            </div>
         <p><a href="/index">Tornar enrere</a></p>   
     </center>
 </body>

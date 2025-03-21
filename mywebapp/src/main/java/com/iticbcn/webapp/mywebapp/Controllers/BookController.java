@@ -61,22 +61,10 @@ public class BookController {
 
     @GetMapping("/inserir") 
     public String inputInserir(@ModelAttribute("users") Usuaris users,Model model) {
-        
+
+        model.addAttribute("llibreErr", true);
+        model.addAttribute("message", "");
         return "inserir";
-    }
-
-
-    @PostMapping("/inserir")
-    public String inserir(@ModelAttribute("users") Usuaris users, Llibre llibre, Model model) {
-
-        repoll.InsertaLlibre(llibre);
-
-        ArrayList<Llibre> llibres = repoll.getAllLlibres();
-
-        model.addAttribute("llibres", llibres);
-        
-        return "consulta";
-    
     }
 
     @GetMapping("/cercaid")
@@ -92,18 +80,53 @@ public class BookController {
 
     }
 
+
+    @PostMapping("/inserir")
+    public String inserir(@ModelAttribute("users") Usuaris users, 
+                          @RequestParam(name = "idLlibre") String idLlibre,  
+                          Llibre llibre, Model model) {
+
+        String message = "";
+        boolean llibreErr = false;
+
+        if (idLlibre == null || !idLlibre.matches("\\d+")) {
+            message = "La id de llibre ha de ser un nombre enter";
+            llibreErr = true;
+            model.addAttribute("message", message);
+            model.addAttribute("llibreErr", llibreErr);
+            return "inserir";
+        } else {
+            repoll.InsertaLlibre(llibre);
+            ArrayList<Llibre> llibres = repoll.getAllLlibres();
+            model.addAttribute("llibres", llibres);
+            return "consulta";            
+        }
+
+        // try {
+        //     llibre.setIdLlibre(Integer.parseInt(idLlibre));
+        //     repoll.InsertaLlibre(llibre);
+        //     ArrayList<Llibre> llibres = repoll.getAllLlibres();
+        //     model.addAttribute("llibres", llibres);
+        //     return "consulta";
+        // } catch (Exception e) {
+        //     message = "La id de llibre ha de ser un nombre enter";
+        //     llibreErr = true;
+        //     model.addAttribute("message", message);
+        //     model.addAttribute("llibreErr",llibreErr);
+        //     return "inserir";
+        // }
+    }
+
     @PostMapping("/cercaid")
     public String cercaId(@ModelAttribute("users") Usuaris users,
                           @RequestParam(name = "idLlibre", required = false) String idLlibre, 
                           Model model) {
         
-        int idLlib = 0;
         String message = "";
         boolean llibreErr = false;
 
         try {
-            idLlib = Integer.parseInt(idLlibre);
-            Llibre llibre = repoll.getLlibreID(idLlib);
+            Llibre llibre = repoll.getLlibreID(Integer.parseInt(idLlibre));
             if(llibre !=null) {
                 model.addAttribute("llibre", llibre);
             } else {
