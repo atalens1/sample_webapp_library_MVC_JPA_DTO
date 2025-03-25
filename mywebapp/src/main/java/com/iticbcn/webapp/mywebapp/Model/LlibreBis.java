@@ -1,6 +1,6 @@
 package com.iticbcn.webapp.mywebapp.Model;
 
-public class Llibre {
+public class LlibreBis {
     private int idLlibre;
     private String titol;
     private String autor;
@@ -8,9 +8,9 @@ public class Llibre {
     private String datapublicacio;
     private String tematica;
 
-    public Llibre() {}
+    public LlibreBis() {}
     
-    public Llibre(int idLlibre, String titol, String autor, String editorial, String datapublicacio, String tematica) {
+    public LlibreBis(int idLlibre, String titol, String autor, String editorial, String datapublicacio, String tematica) {
         this.idLlibre = idLlibre;
         this.titol = titol;
         this.autor = autor;

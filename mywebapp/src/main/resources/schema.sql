@@ -1,0 +1,12 @@
+/*CREATE DATABASE IF NOT EXISTS library;*/
+
+USE library;
+
+CREATE TABLE IF NOT EXISTS books (
+    id_llibre BIGINT AUTO_INCREMENT PRIMARY KEY,
+    titol VARCHAR(255) NOT NULL UNIQUE,
+    autor VARCHAR(255) NOT NULL,
+    editorial VARCHAR(255) NOT NULL,
+    datapublicacio DATE NOT NULL,
+    tematica VARCHAR(255) NOT NULL
+);

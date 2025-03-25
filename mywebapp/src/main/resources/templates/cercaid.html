@@ -30,12 +30,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td><span th:text="${llibre.idLlibre}"></span></td>
-                    <td><span th:text="${llibre.titol}"></span></td>
-                    <td><span th:text="${llibre.autor}"></span></td>
-                    <td><span th:text="${llibre.editorial}"></span></td>
-                    <td><span th:text="${llibre.datapublicacio}"></span></td>
-                    <td><span th:text="${llibre.tematica}"></span></td>
+                    <td><span th:text="${llibre.get().idLlibre}"></span></td>
+                    <td><span th:text="${llibre.get().titol}"></span></td>
+                    <td><span th:text="${llibre.get().autor}"></span></td>
+                    <td><span th:text="${llibre.get().editorial}"></span></td>
+                    <td><span th:text="${llibre.get().datapublicacio}"></span></td>
+                    <td><span th:text="${llibre.get().tematica}"></span></td>
                 </tbody>
             </table>
             <p><a href="/index">Tornar enrere</a></p>        

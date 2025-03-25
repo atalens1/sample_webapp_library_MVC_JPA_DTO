@@ -1,7 +1,10 @@
 package com.iticbcn.webapp.mywebapp.Controllers;
 
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,16 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.iticbcn.webapp.mywebapp.Model.Llibre;
+import com.iticbcn.webapp.mywebapp.Model.LlibreBis;
+import com.iticbcn.webapp.mywebapp.DomainModel.Llibre;
 import com.iticbcn.webapp.mywebapp.Model.Usuaris;
-import com.iticbcn.webapp.mywebapp.Repositories.RepoLlibre;
+import com.iticbcn.webapp.mywebapp.Services.LlibreService;
 
 @Controller
 @SessionAttributes("users")
 public class BookController {
 
+    //@Autowired
+    // RepoLlibre repoll = new RepoLlibre();
     @Autowired
-    RepoLlibre repoll = new RepoLlibre();
+    private LlibreService llibreService; 
 
     @GetMapping("/")
     public String iniciar(Model model) {
@@ -52,7 +58,8 @@ public class BookController {
     @GetMapping("/consulta") 
     public String consulta(@ModelAttribute("users") Usuaris users,Model model) {
 
-        ArrayList<Llibre> llibres = repoll.getAllLlibres();
+        // ArrayList<Llibre> llibres = repoll.getAllLlibres();
+        Set<Llibre> llibres = llibreService.findAll();
 
         model.addAttribute("llibres", llibres);
         
@@ -71,7 +78,7 @@ public class BookController {
     public String inputCerca(@ModelAttribute("users") Usuaris users, Model model) {
 
         Llibre llibre = new Llibre();
-        llibre.setIdLlibre(0);
+        // llibre.setIdLlibre(0);
         model.addAttribute("llibreErr", true);
         model.addAttribute("message", "");
         model.addAttribute("llibre", llibre);
@@ -83,24 +90,51 @@ public class BookController {
 
     @PostMapping("/inserir")
     public String inserir(@ModelAttribute("users") Usuaris users, 
-                          @RequestParam(name = "idLlibre") String idLlibre,  
-                          Llibre llibre, Model model) {
+                          @RequestParam(name = "titol") String titol,  
+                          @RequestParam(name = "autor") String autor,  
+                          @RequestParam(name = "editorial") String editorial,  
+                          @RequestParam(name = "datapublicacio") String datapublicacio,
+                          @RequestParam(name = "tematica") String tematica,  
+                          Model model) {
 
-        String message = "";
-        boolean llibreErr = false;
 
-        if (idLlibre == null || !idLlibre.matches("\\d+")) {
-            message = "La id de llibre ha de ser un nombre enter";
-            llibreErr = true;
-            model.addAttribute("message", message);
-            model.addAttribute("llibreErr", llibreErr);
-            return "inserir";
-        } else {
-            repoll.InsertaLlibre(llibre);
-            ArrayList<Llibre> llibres = repoll.getAllLlibres();
-            model.addAttribute("llibres", llibres);
-            return "consulta";            
-        }
+        // String message = "";
+        // boolean llibreErr = false;
+
+        // if (idLlibre == null || !idLlibre.matches("\\d+")) {
+        //     message = "La id de llibre ha de ser un nombre enter";
+        //     llibreErr = true;
+        //     model.addAttribute("message", message);
+        //     model.addAttribute("llibreErr", llibreErr);
+        //     return "inserir";
+        // } else {
+        //     //int idLl = Integer.parseInt(idLlibre);
+        //     Long idLl = Long.parseLong(idLlibre);
+        //     LocalDate dataPub = LocalDate.parse(datapublicacio, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        //     Llibre llibre = new Llibre(idLl,titol,autor,editorial,dataPub,tematica);
+        //     // repoll.InsertaLlibre(llibre);
+        //     // ArrayList<Llibre> llibres = repoll.getAllLlibres();
+        //     llibreService.save(llibre);
+        //     Set<Llibre> llibres = llibreService.findAll();
+        //     model.addAttribute("llibres", llibres);
+        //     return "consulta";            
+        // }
+
+        //Long idLl = Long.parseLong(idLlibre);
+        Llibre llibre = new Llibre();
+        llibre.setTitol(titol);
+        llibre.setAutor(autor);
+        LocalDate dataPub = LocalDate.parse(datapublicacio, DateTimeFormatter.ofPattern("d/M/yyyy"));
+        llibre.setDatapublicacio(dataPub);
+        llibre.setEditorial(editorial);
+        llibre.setTematica(tematica);
+        //Llibre llibre = new Llibre(titol,autor,editorial,dataPub,tematica);
+        // repoll.InsertaLlibre(llibre);
+        // ArrayList<Llibre> llibres = repoll.getAllLlibres();
+        llibreService.save(llibre);
+        Set<Llibre> llibres = llibreService.findAll();
+        model.addAttribute("llibres", llibres);
+        return "consulta";  
 
         // try {
         //     llibre.setIdLlibre(Integer.parseInt(idLlibre));
@@ -126,13 +160,21 @@ public class BookController {
         boolean llibreErr = false;
 
         try {
-            Llibre llibre = repoll.getLlibreID(Integer.parseInt(idLlibre));
-            if(llibre !=null) {
+            Long idLl = Long.parseLong(idLlibre);
+            // Llibre llibre = repoll.getLlibreID(Integer.parseInt(idLlibre));
+            Optional<Llibre> llibre = llibreService.findByIdLlibre(idLl);
+            if (llibre.isPresent()) {
                 model.addAttribute("llibre", llibre);
             } else {
                 message = "No hi ha cap llibre amb aquesta id";
                 llibreErr = true;
             }
+            // if(llibre !=null) {
+            //     model.addAttribute("llibre", llibre);
+            // } else {
+            //     message = "No hi ha cap llibre amb aquesta id";
+            //     llibreErr = true;
+            // }
 
         } catch (Exception e) {
             message = "La id de llibre ha de ser un nombre enter";
