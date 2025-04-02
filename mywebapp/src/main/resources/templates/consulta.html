@@ -14,25 +14,25 @@
         <table border=1>
             <thead>
                 <tr>
-                    <th>IdLlibre</th>
                     <th>Títol</th>
                     <th>Autor</th>
                     <th>Editorial</th>
                     <th>Data d'edició</th>
                     <th>Temàtica</th>
+                    <th>isbn</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:if="${llibres.empty}" >
+                <tr th:if="${llibreDTOs.empty}" >
                     <td colspan="2">No hi ha llibres disponibles</td>
                 </tr>
-                <tr th:each="llibre:${llibres}">
-                    <td><span th:text="${llibre.idLlibre}"></span></td>
-                    <td><span th:text="${llibre.titol}"></span></td>
-                    <td><span th:text="${llibre.autor}"></span></td>
-                    <td><span th:text="${llibre.editorial}"></span></td>
-                    <td><span th:text="${llibre.datapublicacio}"></span></td>
-                    <td><span th:text="${llibre.tematica}"></span></td>
+                <tr th:each="llibreDTO:${llibreDTOs}">
+                    <td><span th:text="${llibreDTO.titol}"></span></td>
+                    <td><span th:text="${llibreDTO.autor}"></span></td>
+                    <td><span th:text="${llibreDTO.editorial}"></span></td>
+                    <td><span th:text="${llibreDTO.datapublicacio}"></span></td>
+                    <td><span th:text="${llibreDTO.tematica}"></span></td>
+                    <td><span th:text="${llibreDTO.isbn}"></span></td>
                 </tr>
             </tbody>
         </table>

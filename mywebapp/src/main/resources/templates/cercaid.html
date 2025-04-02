@@ -21,21 +21,21 @@
             <table th:if="${!llibreErr}" border=1>
                 <thead>
                     <tr>
-                        <th>IdLlibre</th>
                         <th>Títol</th>
                         <th>Autor</th>
                         <th>Editorial</th>
                         <th>Data d'edició</th>
                         <th>Temàtica</th>
+                        <th>isbn</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <td><span th:text="${llibre.get().idLlibre}"></span></td>
-                    <td><span th:text="${llibre.get().titol}"></span></td>
-                    <td><span th:text="${llibre.get().autor}"></span></td>
-                    <td><span th:text="${llibre.get().editorial}"></span></td>
-                    <td><span th:text="${llibre.get().datapublicacio}"></span></td>
-                    <td><span th:text="${llibre.get().tematica}"></span></td>
+                    <td><span th:text="${llibreDTO.get().titol}"></span></td>
+                    <td><span th:text="${llibreDTO.get().autor}"></span></td>
+                    <td><span th:text="${llibreDTO.get().editorial}"></span></td>
+                    <td><span th:text="${llibreDTO.get().datapublicacio}"></span></td>
+                    <td><span th:text="${llibreDTO.get().tematica}"></span></td>
+                    <td><span th:text="${llibreDTO.get().isbn}"></span></td>
                 </tbody>
             </table>
             <p><a href="/index">Tornar enrere</a></p>        

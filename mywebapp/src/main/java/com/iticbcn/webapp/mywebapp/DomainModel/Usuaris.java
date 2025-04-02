@@ -1,4 +1,4 @@
-package com.iticbcn.webapp.mywebapp.Model;
+package com.iticbcn.webapp.mywebapp.DomainModel;
 
 public class Usuaris {
 

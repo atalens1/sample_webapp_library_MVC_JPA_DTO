@@ -1,8 +1,5 @@
 package com.iticbcn.webapp.mywebapp.Controllers;
 
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.Set;
 
@@ -16,17 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.iticbcn.webapp.mywebapp.Model.LlibreBis;
-import com.iticbcn.webapp.mywebapp.DomainModel.Llibre;
-import com.iticbcn.webapp.mywebapp.Model.Usuaris;
+import com.iticbcn.webapp.mywebapp.DTO.LlibreDTO;
+import com.iticbcn.webapp.mywebapp.DomainModel.Usuaris;
 import com.iticbcn.webapp.mywebapp.Services.LlibreService;
 
 @Controller
 @SessionAttributes("users")
 public class BookController {
 
-    //@Autowired
-    // RepoLlibre repoll = new RepoLlibre();
     @Autowired
     private LlibreService llibreService; 
 
@@ -59,9 +53,10 @@ public class BookController {
     public String consulta(@ModelAttribute("users") Usuaris users,Model model) {
 
         // ArrayList<Llibre> llibres = repoll.getAllLlibres();
-        Set<Llibre> llibres = llibreService.findAll();
+        //Set<Llibre> llibres = llibreService.findAll();
+        Set<LlibreDTO> llibreDTOs = llibreService.findAll();
 
-        model.addAttribute("llibres", llibres);
+        model.addAttribute("llibreDTOs", llibreDTOs);
         
         return "consulta";
     }
@@ -77,24 +72,31 @@ public class BookController {
     @GetMapping("/cercaid")
     public String inputCerca(@ModelAttribute("users") Usuaris users, Model model) {
 
-        Llibre llibre = new Llibre();
+        //Llibre llibre = new Llibre();
         // llibre.setIdLlibre(0);
+        LlibreDTO llibreDTO = new LlibreDTO();
         model.addAttribute("llibreErr", true);
         model.addAttribute("message", "");
-        model.addAttribute("llibre", llibre);
+        //model.addAttribute("llibre", llibre);
+        model.addAttribute("llibreDTO", llibreDTO);
 
         return "cercaid";
 
     }
 
 
+    // @PostMapping("/inserir")
+    // public String inserir(@ModelAttribute("users") Usuaris users, 
+    //                       @RequestParam(name = "titol") String titol,  
+    //                       @RequestParam(name = "autor") String autor,  
+    //                       @RequestParam(name = "editorial") String editorial,  
+    //                       @RequestParam(name = "datapublicacio") String datapublicacio,
+    //                       @RequestParam(name = "tematica") String tematica,  
+    //                       Model model) {
+
     @PostMapping("/inserir")
     public String inserir(@ModelAttribute("users") Usuaris users, 
-                          @RequestParam(name = "titol") String titol,  
-                          @RequestParam(name = "autor") String autor,  
-                          @RequestParam(name = "editorial") String editorial,  
-                          @RequestParam(name = "datapublicacio") String datapublicacio,
-                          @RequestParam(name = "tematica") String tematica,  
+                          @ModelAttribute LlibreDTO llibreDTO,
                           Model model) {
 
 
@@ -120,20 +122,24 @@ public class BookController {
         //     return "consulta";            
         // }
 
-        //Long idLl = Long.parseLong(idLlibre);
-        Llibre llibre = new Llibre();
-        llibre.setTitol(titol);
-        llibre.setAutor(autor);
-        LocalDate dataPub = LocalDate.parse(datapublicacio, DateTimeFormatter.ofPattern("d/M/yyyy"));
-        llibre.setDatapublicacio(dataPub);
-        llibre.setEditorial(editorial);
-        llibre.setTematica(tematica);
-        //Llibre llibre = new Llibre(titol,autor,editorial,dataPub,tematica);
-        // repoll.InsertaLlibre(llibre);
-        // ArrayList<Llibre> llibres = repoll.getAllLlibres();
-        llibreService.save(llibre);
-        Set<Llibre> llibres = llibreService.findAll();
-        model.addAttribute("llibres", llibres);
+        llibreService.save(llibreDTO);    
+
+        // Llibre llibre = new Llibre();
+        // llibre.setTitol(titol);
+        // llibre.setAutor(autor);
+        // LocalDate dataPub = LocalDate.parse(datapublicacio, DateTimeFormatter.ofPattern("d/M/yyyy"));
+        // llibre.setDatapublicacio(dataPub);
+        // llibre.setEditorial(editorial);
+        // llibre.setTematica(tematica);
+
+        // llibreService.save(llibre);
+
+        // Set<Llibre> llibres = llibreService.findAll();
+        // model.addAttribute("llibres", llibres);
+
+        Set<LlibreDTO> llibreDTOs = llibreService.findAll();
+
+        model.addAttribute("llibreDTOs", llibreDTOs);
         return "consulta";  
 
         // try {
@@ -162,9 +168,12 @@ public class BookController {
         try {
             Long idLl = Long.parseLong(idLlibre);
             // Llibre llibre = repoll.getLlibreID(Integer.parseInt(idLlibre));
-            Optional<Llibre> llibre = llibreService.findByIdLlibre(idLl);
-            if (llibre.isPresent()) {
-                model.addAttribute("llibre", llibre);
+            //Optional<Llibre> llibre = llibreService.findByIdLlibre(idLl);
+
+            Optional<LlibreDTO> llibreDTO = llibreService.findByIdLlibre(idLl);
+
+            if (llibreDTO.isPresent()) {
+                model.addAttribute("llibreDTO", llibreDTO);
             } else {
                 message = "No hi ha cap llibre amb aquesta id";
                 llibreErr = true;

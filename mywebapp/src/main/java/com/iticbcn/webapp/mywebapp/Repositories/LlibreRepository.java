@@ -13,7 +13,8 @@ public interface LlibreRepository extends CrudRepository<Llibre, Long> {
     @Override
     @NonNull
     Set<Llibre> findAll();
+    
     Llibre findByTitol(String titol);
-    Set<Llibre> findByTitolAndEditorial(String titol, String Editorial);
+    Llibre findByTitolAndEditorial(String titol, String Editorial);
 }
 
