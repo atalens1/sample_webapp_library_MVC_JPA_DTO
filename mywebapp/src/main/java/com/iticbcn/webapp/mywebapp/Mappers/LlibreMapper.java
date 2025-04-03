@@ -29,7 +29,5 @@ public interface LlibreMapper {
     Llibre LlibreDTOToLlibre(LlibreDTO llibreDTO);
 
     Set<Llibre> LlibresDTOToLlibres(Set<LlibreDTO> llibresDTO);
-    Set<LlibreDTO> LlibresToLlibresDTO(Set<Llibre> llibres); 
-
-    
+    Set<LlibreDTO> LlibresToLlibresDTO(Set<Llibre> llibres);     
 }
